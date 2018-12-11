@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+import {Switch, Route} from 'react-router-dom';
+import Home from './Home';
 import Product from './Product';
 import NavBar from './NavBar';
+import Cart from './Cart';
+import About from './About';
 
 class App extends Component {
 
@@ -19,15 +23,18 @@ class App extends Component {
   render() {
     return (
       <div> 
-              {[this.state.cart.length].map(number => <NavBar number={number}></NavBar>)}
-        <div className="container">
-          <div className="row">
+        <NavBar number={this.state.cart.length}></NavBar>
+        <div className="row">
             <div className="col-12 my-3">
             </div>
-          </div>
-          <div id="products" className="row view-group">
-            {["Lagunitas","Goose Island","Sierra Nevada","Coors","Budweiser","Miller"].map(title => <Product title={title} addToCart={this.addToCart}></Product>)}
-          </div>
+            </div>
+        <div className="container">
+        <Switch>
+          <Route path="/cart" component={Cart} />
+          <Route path="/" exact component={Home} />
+          <Route path="/about" render={() => (<div className="jumbotron"><h1>About</h1>
+          <p>This React Store is developed for the November 2018 DotNet class.</p></div>)}/>
+        </Switch>
         </div>
       </div>
     );
